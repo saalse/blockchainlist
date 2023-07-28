@@ -1,10 +1,11 @@
-// Set API key and base ID
-import { PAT, baseId } from './config.js';
+// Set the URL of the Cloud Function
+const cloudFunctionURL =
+  'https://us-central1-chain-atlas-383914.cloudfunctions.net/airtable-api-proxy';
 
 // Function to fetch all data from Airtable
 const fetchAllFromAirtable = async (table) => {
   const currentTime = new Date().getTime();
-  const oneHour = 24 * 60 * 60 * 1000; // 24 hour in milliseconds
+  const oneHour = 10; // 24 hours in milliseconds
   const cachedData = localStorage.getItem(table);
 
   if (cachedData) {
@@ -20,22 +21,18 @@ const fetchAllFromAirtable = async (table) => {
   let offset = null;
 
   do {
-    let url = `https://api.airtable.com/v0/${baseId}/${table}?pageSize=100`; // fetch 100 records at a time
+    let url = `${cloudFunctionURL}?table=${table}&pageSize=100`; // fetch 100 records at a time
 
     // Add offset parameter if provided
     if (offset) {
       url += `&offset=${offset}`;
     }
 
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${PAT}`,
-      },
-    });
-
+    const response = await fetch(url);
     const data = await response.json();
 
-    records.push(...data.records);
+    // records.push(...data.records);
+    records.push(...data); // Adjusted this line to push data directly
 
     offset = data.offset; // update the offset for the next batch
   } while (offset);
