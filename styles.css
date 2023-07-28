@@ -1,0 +1,11 @@
+/* Custom CSS */
+
+:root {
+  --bs-gray-100: #f8f9fa; /* Define the --bs-gray-100 custom property with an appropriate color value */
+  --bs-body-bg: var(--bs-gray-100);
+}
+
+#suggestions {
+  position: absolute;
+  z-index: 2; /* set a higher z-index than the content below */
+}
