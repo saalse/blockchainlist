@@ -5,7 +5,7 @@ const cloudFunctionURL =
 // Function to fetch all data from Airtable
 const fetchAllFromAirtable = async (table) => {
   const currentTime = new Date().getTime();
-  const oneHour = 10; // 24 hours in milliseconds
+  const oneHour = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
   const cachedData = localStorage.getItem(table);
 
   if (cachedData) {
